@@ -1,0 +1,60 @@
+
+- hosts: all
+  tasks:
+    - name: Install a list of packages
+      become: yes
+      become_method: su
+      apt:
+        name: "{{ packages }}"
+      vars:
+        packages:
+        - python-setuptools
+    - name: Download service file
+      become: yes
+      become_method: su
+      get_url:
+        url: https://raw.githubusercontent.com/jmurrayufo/SystemStatsInflux/master/stats.service
+        force: yes
+        dest: /etc/systemd/system/stats.service
+        mode: 0644
+    - name: Root Scripts Directory
+      become: yes
+      become_method: su
+      file:
+        path: /root/Scripts/SystemStatsInflux/
+        owner: root
+        group: root
+        state: directory
+    - name: Download python Script
+      become: yes
+      become_method: su
+      get_url:
+        url: https://raw.githubusercontent.com/jmurrayufo/SystemStatsInflux/master/InfluxStatsGather.py
+        force: yes
+        dest: /root/Scripts/SystemStatsInflux/InfluxStatsGather.py
+        mode: 0777
+    - name: Ensure pip
+      become: yes
+      become_method: su
+      command: python3.7 -m ensurepip
+    - name: Install pip requirements
+      become: yes
+      become_method: su
+      pip:
+        name:
+          - requests
+          - psutil
+        executable: pip3.7
+    - name: Install and start service
+      become: yes
+      become_method: su
+      systemd: 
+        name: stats
+        daemon_reload: yes
+        state: restarted
+        enabled: yes
+
+
+
+
+

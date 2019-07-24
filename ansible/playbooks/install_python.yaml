@@ -1,0 +1,39 @@
+
+- hosts: all
+  tasks:
+    - name: Check for python 3.7
+      command: which python3.7
+      register: pip_exists
+      ignore_errors: yes
+    - name: Install a list of packages
+      when: pip_exists is failed
+      become: yes
+      become_method: su
+      apt:
+        name: "{{ packages }}"
+      vars:
+        packages:
+        - make
+        - build-essential
+        - libssl-dev
+        - zlib1g-dev
+        - libbz2-dev
+        - libreadline-dev
+        - libsqlite3-dev
+        - wget
+        - curl
+        - llvm
+        - libncurses5-dev
+        - libncursesw5-dev
+        - xz-utils
+        - tk-dev
+        - libffi-dev
+        - python-setuptools
+    - name: Install python 3.7.3
+      when: pip_exists is failed
+      become: yes
+      become_method: su
+      script: py_3_7_3_instal.sh
+      args:
+        executable: bash
+

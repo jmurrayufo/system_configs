@@ -1,0 +1,27 @@
+- hosts: all
+  vars:
+      python_location: "/usr/local/bin/python3.7"
+      python_target_version: 3.7.4
+  tasks:
+    - name: Check for Python 3.7.4
+      stat: 
+        path: "{{ python_location }}"
+      register: result_a
+      tags: python3.7
+    - name: Check Python Version
+      command: "{{ python_location}} --version"
+      register: result_b
+      when: "result_a.stat.exists"
+      changed_when: False
+      failed_when: False
+      tags: python3.7
+    - name: Install python 3.7.4
+      when: "not result_a.stat.exists or python_target_version not in result_b.stdout"
+      become: yes
+      become_method: su
+      script: py_3_7_4_instal.sh
+      args:
+        executable: bash
+      tags: python3.7
+
+        

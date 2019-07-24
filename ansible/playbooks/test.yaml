@@ -1,0 +1,10 @@
+
+- hosts: all
+  tasks:
+    - name: Check for python 3.7
+      command: which pip3.7
+      register: pip_exists
+    - name: Upgrade
+      when: pip_exists is failed
+      debug:
+        var: pip_exists

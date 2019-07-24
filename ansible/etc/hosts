@@ -1,0 +1,34 @@
+all:
+  children:
+    physical:
+      hosts:
+        atlas:
+          ansible_host: 192.168.1.2
+        roachhab:
+          ansible_host: 192.168.1.7
+        dragonhab:
+          ansible_host: 192.168.1.8
+        herbibot:
+          ansible_host: 192.168.1.18
+        argos:
+          ansible_host: 192.168.1.20
+        set:
+          ansible_host: 192.168.1.4
+    vm:
+      hosts:
+        processing_box:
+          ansible_host: 192.168.1.9
+        factorio:
+          ansible_host: 192.168.1.10
+        #herbihub:
+        #  ansible_host: 192.168.1.16
+        #dbtest:
+        #  ansible_host: 192.168.3.4
+        admingui:
+          ansible_host: 127.0.0.1
+        stats-db:
+          ansible_host: 192.168.4.3
+        fafnir:
+          ansible_host: 192.168.4.2
+
+      
