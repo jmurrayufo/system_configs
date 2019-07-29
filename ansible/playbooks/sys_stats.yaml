@@ -30,7 +30,7 @@
       become_method: su
       get_url:
         url: https://raw.githubusercontent.com/jmurrayufo/SystemStatsInflux/master/InfluxStatsGather.py
-        force: yes
+        checksum: sha256:https://raw.githubusercontent.com/jmurrayufo/SystemStatsInflux/master/InfluxStatsGather.sha256
         dest: /root/Scripts/SystemStatsInflux/InfluxStatsGather.py
         mode: 0777
     - name: Ensure pip
@@ -53,8 +53,3 @@
         daemon_reload: yes
         state: restarted
         enabled: yes
-
-
-
-
-

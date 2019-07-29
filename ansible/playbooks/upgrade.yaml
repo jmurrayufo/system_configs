@@ -13,6 +13,7 @@
         - rsync
         - tmux
         - vim-nox
+        - sudo
 
     - name: Update all packages to the latest version
       become: yes

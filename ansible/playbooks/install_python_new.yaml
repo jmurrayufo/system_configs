@@ -1,3 +1,7 @@
+
+# Installs current version of pyhthon 3.7.4
+# Estimated execution time: 30-60 minutes/host
+
 - hosts: all
   vars:
       python_location: "/usr/local/bin/python3.7"
@@ -8,6 +12,31 @@
         path: "{{ python_location }}"
       register: result_a
       tags: python3.7
+    - name: Install compiler software
+      become: yes
+      become_method: su
+      apt:
+        update_cache: yes
+        name: "{{ packages }}"
+      vars:  
+        packages:
+        - make 
+        - build-essential
+        - libssl-dev 
+        - zlib1g-dev
+        - libbz2-dev
+        - libreadline-dev
+        - libsqlite3-dev
+        - wget
+        - curl
+        - llvm
+        - libncurses5-dev
+        - libncursesw5-dev
+        - xz-utils
+        - tk-dev
+        - libffi-dev
+        - sqlite3
+        - libsqlite3-dev
     - name: Check Python Version
       command: "{{ python_location}} --version"
       register: result_b
@@ -19,7 +48,7 @@
       when: "not result_a.stat.exists or python_target_version not in result_b.stdout"
       become: yes
       become_method: su
-      script: py_3_7_4_instal.sh
+      script: ../scripts/py_3_7_4_instal.sh
       args:
         executable: bash
       tags: python3.7
