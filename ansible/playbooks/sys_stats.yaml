@@ -30,13 +30,15 @@
       become_method: su
       get_url:
         url: https://raw.githubusercontent.com/jmurrayufo/SystemStatsInflux/master/InfluxStatsGather.py
-        checksum: sha256:https://raw.githubusercontent.com/jmurrayufo/SystemStatsInflux/master/InfluxStatsGather.sha256
+        checksum: sha256:https://raw.githubusercontent.com/jmurrayufo/SystemStatsInflux/master/checksums.sha256
         dest: /root/Scripts/SystemStatsInflux/InfluxStatsGather.py
         mode: 0777
+      register: downloaded
     - name: Ensure pip
       become: yes
       become_method: su
       command: python3.7 -m ensurepip
+      changed_when: false
     - name: Install pip requirements
       become: yes
       become_method: su
@@ -46,6 +48,7 @@
           - psutil
         executable: pip3.7
     - name: Install and start service
+      when: downloaded.changed
       become: yes
       become_method: su
       systemd: 
