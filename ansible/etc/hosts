@@ -18,12 +18,8 @@ all:
       hosts:
         processing_box:
           ansible_host: 192.168.1.9
-        #factorio:
-        #  ansible_host: 192.168.1.10
         #herbihub:
         #  ansible_host: 192.168.1.16
-        #dbtest:
-        #  ansible_host: 192.168.3.4
         admingui:
           ansible_host: 127.0.0.1
         stats-db:
@@ -32,5 +28,11 @@ all:
           ansible_host: 192.168.4.2
         gitlab:
           ansible_host: 192.168.4.4
+        discord-bots:
+          ansible_host: 192.168.4.5
+        orpheus:
+          ansible_host: 192.168.4.6
+        steam:
+          ansible_host: 192.168.4.7
 
       
